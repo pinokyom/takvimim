@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_file
 import json
 import os
 
@@ -7,7 +7,7 @@ DATA_FILE = "events.json"
 
 @app.route("/")
 def index():
-    return send_from_directory(".", "index.html")
+    return send_file("index.html")
 
 def load_events():
     if not os.path.exists(DATA_FILE):
