@@ -1,6 +1,13 @@
 from flask import Flask, request, jsonify
+from flask import Flask, send_from_directory
 import json
 import os
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return send_from_directory(".", "index.html")
 
 app = Flask(__name__)
 DATA_FILE = "events.json"
