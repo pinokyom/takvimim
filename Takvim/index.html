@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShadowCal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="calendar-container">
+    <h1>🗓️ ShadowCal</h1>
+    <div id="calendar"></div>
+    <div class="event-form">
+      <input type="date" id="event-date" />
+      <input type="text" id="event-title" placeholder="Etkinlik başlığı" />
+      <button onclick="addEvent()">Ekle</button>
+    </div>
+    <ul id="event-list"></ul>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

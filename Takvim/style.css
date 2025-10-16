@@ -1,0 +1,41 @@
+body {
+  background-color: #0f0f0f;
+  color: #00ffff;
+  font-family: 'Courier New', monospace;
+  padding: 20px;
+}
+
+.calendar-container {
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid #00ffff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+input, button {
+  background-color: #1a1a1a;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #00ffff;
+  color: #000;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin: 5px 0;
+  background-color: #1a1a1a;
+  padding: 5px;
+  border-left: 3px solid #00ffff;
+}
