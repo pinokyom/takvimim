@@ -7,7 +7,7 @@ app = Flask(__name__, static_folder="Takvim", static_url_path="")
 CORS(app)
 
 # BURAYA Render'dan aldığın veritabanı bağlantısını yapıştır
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://kullanici:sifre@host:port/veritabani'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://bl4ck:J4Qv9J7gfExZ0XSHPAuZa0vAWdU54te5@dpg-d3t8afp5pdvs73alt75g-a/takvimdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -54,3 +54,4 @@ def notes(date):
 
 if __name__ == "__main__":
     app.run()
+
