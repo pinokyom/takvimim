@@ -1,12 +1,22 @@
 from flask import Flask, request, jsonify, send_from_directory
-import json
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import os
 
+app = Flask(__name__, static_folder="Takvim", static_url_path="")
+CORS(app)
+
+# BURAYA Render'dan aldığın veritabanı bağlantısını yapıştır
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://bl4ck:J4Qv9J7gfExZ0XSHPAuZa0vAWdU54te5@dpg-d3t8afp5pdvs73alt75g-a:5432/takvimdb'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+db = SQLAlchemy(app)
 
-app = Flask(__name__, static_folder=".", static_url_path="")
-DATA_FILE = "events.json"
+class Note(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(20), unique=True, nullable=False)
+    note = db.Column(db.Text, nullable=True)
+    done = db.Column(db.Boolean, default=False)
 
 @app.before_first_request
 def create_tables():
@@ -14,30 +24,33 @@ def create_tables():
 
 @app.route("/")
 def index():
-    return send_from_directory(".", "index.html")
+    return send_from_directory("Takvim", "index.html")
 
-def load_events():
-    if not os.path.exists(DATA_FILE):
-        return []
-    with open(DATA_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+@app.route("/notes/<date>", methods=["GET", "POST", "DELETE"])
+def notes(date):
+    note_entry = Note.query.filter_by(date=date).first()
 
-def save_events(events):
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(events, f, ensure_ascii=False, indent=2)
+    if request.method == "GET":
+        if note_entry:
+            return jsonify({"note": note_entry.note, "done": note_entry.done})
+        return jsonify({})
 
-@app.route("/events", methods=["GET"])
-def get_events():
-    return jsonify(load_events())
+    elif request.method == "POST":
+        data = request.json
+        if note_entry:
+            note_entry.note = data.get("note", "")
+            note_entry.done = data.get("done", False)
+        else:
+            note_entry = Note(date=date, note=data.get("note", ""), done=data.get("done", False))
+            db.session.add(note_entry)
+        db.session.commit()
+        return jsonify({"status": "saved"})
 
-@app.route("/events", methods=["POST"])
-def add_event():
-    data = request.json
-    events = load_events()
-    events.append(data)
-    save_events(events)
-    return jsonify({"status": "ok", "event": data})
+    elif request.method == "DELETE":
+        if note_entry:
+            db.session.delete(note_entry)
+            db.session.commit()
+        return jsonify({"status": "deleted"})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
-
+    app.run()
