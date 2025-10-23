@@ -11,3 +11,25 @@ function saveNote() {
     closeModal();
   });
 }
+
+function openModal(date) {
+  selectedDate = date;
+  modalDate.textContent = `Not: ${date}`;
+
+  fetch(`https://takvim-api.onrender.com/notes/${selectedDate}`)
+    .then(res => res.json())
+    .then(data => {
+      noteText.value = data.note || '';
+      doneCheckbox.checked = data.done || false;
+      modal.style.display = 'block';
+    });
+}
+
+function deleteNote() {
+  fetch(`https://takvim-api.onrender.com/notes/${selectedDate}`, {
+    method: 'DELETE'
+  }).then(() => {
+    generateCalendar();
+    closeModal();
+  });
+}
