@@ -16,7 +16,7 @@ function openModal(date) {
   selectedDate = date;
   modalDate.textContent = `Not: ${date}`;
 
-  fetch(`https://takvim-api.onrender.com/notes/${selectedDate}`)
+  fetch(`https://takvimim.onrender.com/${selectedDate}`)
     .then(res => res.json())
     .then(data => {
       noteText.value = data.note || '';
@@ -26,11 +26,12 @@ function openModal(date) {
 }
 
 function deleteNote() {
-  fetch(`https://takvim-api.onrender.com/notes/${selectedDate}`, {
+  fetch(`https://takvimim.onrender.com/${selectedDate}`, {
     method: 'DELETE'
   }).then(() => {
     generateCalendar();
     closeModal();
   });
 }
+
 
