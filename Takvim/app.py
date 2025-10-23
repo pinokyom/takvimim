@@ -8,6 +8,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://bl4ck:J4Qv9J7gfExZ0XSHPAuZ
 app = Flask(__name__, static_folder=".", static_url_path="")
 DATA_FILE = "events.json"
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
 @app.route("/")
 def index():
     return send_from_directory(".", "index.html")
@@ -36,3 +40,4 @@ def add_event():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
