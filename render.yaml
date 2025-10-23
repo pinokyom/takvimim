@@ -1,13 +1,9 @@
-# Exported from Render on 2025-10-23T19:27:55Z
-version: "1"
 services:
-- type: web
-  name: takvimim
-  runtime: python
-  repo: https://github.com/pinokyom/takvimim
-  plan: free
-  region: oregon
-  buildCommand: pip install -r requirements.txt
-  startCommand: python app.py
-  autoDeployTrigger: commit
-  rootDir: Takvim
+  - type: web
+    name: takvimim
+    env: python
+    buildCommand: ""
+    startCommand: "python app.py"
+    repo: https://github.com/pinokyom/takvimim
+    branch: main
+    rootDir: Takvim
