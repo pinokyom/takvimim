@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify, send_from_directory
 import json
 import os
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://bl4ck:J4Qv9J7gfExZ0XSHPAuZa0vAWdU54te5@dpg-d3t8afp5pdvs73alt75g-a:5432/takvimdb'
+
+
 app = Flask(__name__, static_folder=".", static_url_path="")
 DATA_FILE = "events.json"
 
