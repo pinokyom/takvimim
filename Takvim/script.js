@@ -12,6 +12,16 @@ function saveNote() {
   });
 }
 
+function deleteNote() {
+  fetch(`/notes/${selectedDate}`, {
+    method: 'DELETE'
+  }).then(() => {
+    generateCalendar();
+    closeModal();
+  });
+}
+
+
 function openModal(date) {
   selectedDate = date;
   modalDate.textContent = `Not: ${date}`;
